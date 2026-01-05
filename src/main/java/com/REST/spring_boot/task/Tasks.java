@@ -1,4 +1,4 @@
-package com.REST.spring_boot;
+package com.REST.spring_boot.task;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

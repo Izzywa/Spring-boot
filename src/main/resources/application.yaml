@@ -21,3 +21,6 @@
     sql:
       init:
         mode: always
+
+  jwt:
+      secret: ${JJWT_SECRET_KEY}
