@@ -1,9 +1,7 @@
 package com.REST.spring_boot.task;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +17,13 @@ public class TasksController {
     }
 
     @GetMapping
-    public List<Tasks> getTasks() {
+    public List<Tasks> getTasks(Authentication authentication) {
+        System.out.println(authentication.getName());
         return TasksService.getAllTasks();
+    }
+
+    @PostMapping
+    public Tasks createTask(@RequestBody Tasks task) {
+        return TasksService.createTask(task);
     }
 }

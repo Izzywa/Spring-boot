@@ -1,5 +1,6 @@
 package com.REST.spring_boot.authentication;
 
+import com.REST.spring_boot.task.Tasks;
 import jakarta.persistence.*;
 import lombok.*;
 import org.jspecify.annotations.Nullable;
@@ -8,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -66,4 +68,10 @@ public class Users implements UserDetails{
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    // This line establishes the one-to-many relationship
+    // if a user is deleted, all their tasks will also be deleted
+    private List<Tasks> tasks = new ArrayList<>();
+    // To get the tasks associated with a user, we use this list
 }

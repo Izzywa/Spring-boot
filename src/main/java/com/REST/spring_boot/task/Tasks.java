@@ -1,27 +1,34 @@
 package com.REST.spring_boot.task;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.REST.spring_boot.authentication.Users;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
 // Entity class representing a Task
+@Setter
 @Entity
 public class Tasks {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Getter
     private String name;
+    @Getter
     private String description;
+    @Getter
     private Boolean active;
+    @Getter
     private ZonedDateTime dueDate;
 
-    public Tasks() {
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     public Tasks(ZonedDateTime dueDate,
                  Boolean active,
@@ -35,55 +42,21 @@ public class Tasks {
         this.id = id;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public ZonedDateTime getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(ZonedDateTime dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Tasks tasks = (Tasks) o;
-        return Objects.equals(id, tasks.id) && Objects.equals(name, tasks.name) && Objects.equals(description, tasks.description) && Objects.equals(active, tasks.active) && Objects.equals(dueDate, tasks.dueDate);
+        return Objects.equals(id, tasks.id) &&
+                Objects.equals(name, tasks.name) &&
+                Objects.equals(description, tasks.description) &&
+                Objects.equals(active, tasks.active) &&
+                Objects.equals(dueDate, tasks.dueDate);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name, description, active, dueDate);
     }
+
 }
+

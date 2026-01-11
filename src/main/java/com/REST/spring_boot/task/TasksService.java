@@ -1,5 +1,7 @@
 package com.REST.spring_boot.task;
 
+import com.REST.spring_boot.authentication.Users;
+import com.REST.spring_boot.security.SecurityUtils;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -14,6 +16,13 @@ public class TasksService {
     }
 
     public List<Tasks> getAllTasks() {
-        return tasksRepository.findAll();
+        Users currentUser = SecurityUtils.getCurrentUser();
+        return tasksRepository.findByUserId(currentUser.getId());
+    }
+
+    public Tasks createTask(Tasks task) {
+        Users currentUser = SecurityUtils.getCurrentUser();
+        task.setUser(currentUser);
+        return tasksRepository.save(task);
     }
 }
