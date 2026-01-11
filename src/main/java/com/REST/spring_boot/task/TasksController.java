@@ -18,12 +18,21 @@ public class TasksController {
 
     @GetMapping
     public List<Tasks> getTasks(Authentication authentication) {
-        System.out.println(authentication.getName());
         return TasksService.getAllTasks();
     }
 
     @PostMapping
     public Tasks createTask(@RequestBody Tasks task) {
         return TasksService.createTask(task);
+    }
+
+    @PutMapping
+    public Tasks updateTask(@RequestBody Tasks task) {
+        return TasksService.updateTask(task);
+    }
+
+    @DeleteMapping("/{taskId}")
+    public void deleteTask(@PathVariable Integer taskId) {
+        TasksService.deleteTask(taskId);
     }
 }
